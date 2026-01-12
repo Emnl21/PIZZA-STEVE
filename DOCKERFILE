@@ -1,0 +1,31 @@
+# Usa una imagen oficial de PHP con Apache
+FROM php:8.2-apache
+
+# Instala extensiones necesarias para MySQL
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Copia los archivos .html de la raíz
+COPY *.html /var/www/html/
+
+# Copia la carpeta api con todos los archivos .php
+COPY api/ /var/www/html/api/
+
+# Copia las carpetas de assets, config, database, etc.
+COPY assets/ /var/www/html/assets/
+COPY config/ /var/www/html/config/
+COPY database/ /var/www/html/database/
+COPY controllers/ /var/www/html/controllers/
+COPY models/ /var/www/html/models/
+COPY views/ /var/www/html/views/
+
+# Copia archivos PHP adicionales en la raíz si existen
+COPY *.php /var/www/html/ 2>/dev/null || true
+
+# Habilitar módulo rewrite de Apache
+RUN a2enmod rewrite
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Iniciar Apache
+CMD ["apache2-foreground"]
