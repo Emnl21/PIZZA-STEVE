@@ -17,6 +17,9 @@ COPY controllers/ /var/www/html/controllers/
 COPY models/ /var/www/html/models/
 COPY views/ /var/www/html/views/
 
+# Desactiva otros MPMs y activa prefork
+RUN a2dismod mpm_event mpm_worker && a2enmod mpm_prefork
+
 # Habilitar módulo rewrite de Apache
 RUN a2enmod rewrite
 
