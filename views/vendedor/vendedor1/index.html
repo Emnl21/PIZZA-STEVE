@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizza Steve · Panel de Vendedor</title>
+  <meta name="description" content="Panel de ventas para pizzería: toma de pedidos, clientes, órdenes y resumen."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="sidebar" aria-label="Barra lateral de navegación">
+      <div class="logo">
+        <button class="hamburger" id="btnSidebar" aria-label="Abrir/cerrar menú" aria-expanded="false">☰</button>
+        <div class="logo-mark" aria-hidden="true"></div>
+        <div class="logo-text">
+          <div class="brand">PIZZA STEVE</div>
+          <div class="muted">Panel de vendedor</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <label for="searchInput" class="sr-only">Buscar pedido o cliente</label>
+        <input id="searchInput" placeholder="Buscar en el menú..." autocomplete="off" />
+      </div>
+
+      <nav class="nav" role="navigation" aria-label="Secciones del panel">
+        <a data-nav="#vender" class="active">Vender</a>
+        <a data-nav="#ordenes">Órdenes</a>
+        <a data-nav="#clientes">Clientes</a>
+        <a data-nav="#resumen">Resumen</a>
+        <a data-nav="#config">Configuración</a>
+      </nav>
+
+      <footer class="sidebar-footer">
+        <div class="made">Hecho con 🍕 y ❤️</div>
+      </footer>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <header class="header">
+        <div class="section-title">
+          <span class="badge" id="shiftBadge">En turno</span>
+          <h1 id="pageTitle">Vender</h1>
+        </div>
+        <div class="header-actions">
+          <span class="pill">Sucursal: <strong id="sucursalName">Central</strong></span>
+          <span class="pill">Moneda: <strong>Bs</strong></span>
+          <button class="btn btn-ghost" id="btnTheme" title="Cambiar tema">Tema</button>
+        </div>
+      </header>
+
+      <!-- VENDER -->
+      <section id="vender" data-page>
+        <div class="cards kpis" id="kpiRow">
+          <div class="card"><div class="content kpi">
+            <div><h3>Ventas de hoy</h3><div class="value" id="ventasHoy">Bs 0.00</div></div>
+            <span class="tag" id="kpiVsAyer">–</span>
+          </div></div>
+          <div class="card"><div class="content kpi">
+            <div><h3>Órdenes</h3><div class="value" id="kpiOrdenes">0</div></div>
+            <span class="tag" id="kpiEnCurso">0 en curso</span>
+          </div></div>
+          <div class="card"><div class="content kpi">
+            <div><h3>Ticket promedio</h3><div class="value" id="kpiTicket">Bs 0.00</div></div>
+            <span class="tag">Hoy</span>
+          </div></div>
+          <div class="card"><div class="content kpi">
+            <div><h3>Clientes</h3><div class="value" id="kpiClientes">0</div></div>
+            <span class="tag" id="kpiNuevos">0 nuevos</span>
+          </div></div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <div class="section-title"><h2>Menú</h2><span class="tag">Pizzas</span></div>
+            <div class="products" id="products" aria-live="polite"></div>
+          </div>
+          <div>
+            <div class="section-title"><h2>Pedido actual</h2><span class="tag">Carrito</span></div>
+            <div class="cart" aria-live="polite">
+              <div id="cartList" class="cart-list"></div>
+              <div class="promo">
+                <label class="switch">
+                  <input type="checkbox" id="chkCumple"/>
+                  <span class="slider"></span>
+                </label>
+                <div class="promo-text">
+                  <strong>Cumpleañero 🎉</strong> <span class="muted">-20% en la orden</span>
+                </div>
+              </div>
+              <div class="total-break">
+                <div><span>Subtotal</span><span id="cartSubtotal">Bs 0.00</span></div>
+                <div class="disc"><span>Descuento cumple</span><span id="cartDesc">- Bs 0.00</span></div>
+                <div class="total"><span>Total</span><span id="cartTotal">Bs 0.00</span></div>
+              </div>
+              <div class="footer">
+                <button class="btn btn-ghost" id="btnVaciar">Vaciar</button>
+                <button class="btn btn-primary" id="btnCheckout">Registrar pedido</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÓRDENES -->
+      <section id="ordenes" data-page hidden>
+        <div class="section-title"><h2>Órdenes recientes</h2><span class="tag" id="ordenesCount">0</span></div>
+        <div class="card">
+          <div class="content">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th><th>Cliente</th><th>Items</th><th>Total</th><th>Estado</th><th>Hora</th>
+                </tr>
+              </thead>
+              <tbody id="tablaOrdenes"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLIENTES -->
+      <section id="clientes" data-page hidden>
+        <div class="section-title"><h2>Clientes</h2><span class="tag" id="clientesCount">0</span></div>
+        <div class="card">
+          <div class="content">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th><th>Pedidos</th><th>Gasto total</th><th>Último pedido</th>
+                </tr>
+              </thead>
+              <tbody id="tablaClientes"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESUMEN -->
+      <section id="resumen" data-page hidden>
+        <div class="section-title"><h2>Resumen</h2><span class="tag">Del día</span></div>
+        <div class="cards">
+          <div class="card"><div class="content kpi"><div><h3>Más vendida</h3><div class="value" id="topProducto">–</div></div><span class="tag">Top</span></div></div>
+          <div class="card"><div class="content kpi"><div><h3>Horas pico</h3><div class="value" id="horasPico">–</div></div><span class="tag">Estimado</span></div></div>
+          <div class="card"><div class="content kpi"><div><h3>Cumpleañeros</h3><div class="value" id="kpiCumples">0</div></div><span class="tag">Hoy</span></div></div>
+          <div class="card"><div class="content kpi"><div><h3>Entrega</h3><div class="value" id="kpiEntrega">20 min</div></div><span class="tag">Promedio</span></div></div>
+        </div>
+      </section>
+
+      <!-- CONFIG -->
+      <section id="config" data-page hidden>
+        <div class="section-title"><h2>Configuración</h2><span class="tag">Proyecto</span></div>
+        <div class="card">
+          <div class="content">
+            <p class="muted">
+              Personaliza precios, productos e imágenes en <code>js/app.js</code> y <code>assets/img/</code>.
+              Este panel guarda datos básicos en <code>localStorage</code> para simulación.
+            </p>
+            <div class="config-grid">
+              <label class="field">
+                <span>Nombre de sucursal</span>
+                <input id="inpSucursal" placeholder="Central" />
+              </label>
+              <label class="field">
+                <span>Nombre rápido de cliente (para venta)</span>
+                <input id="inpCliente" placeholder="Cliente de paso" />
+              </label>
+              <button class="btn btn-ghost" id="btnResetData">Reiniciar datos</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Gestor centralizado de tema (debe cargarse antes de app.js) -->
+  <script src="../../assets/js/theme-manager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Pizza Steve</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../assets/css/palette.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../assets/css/loading.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="pageLoading" class="loading-overlay">
+        <div class="loading-container">
+            <!-- GIF de Pizza Steve -->
+            <img src="../../assets/images/crazy-person-pizza-steve.gif" class="loading-gif" alt="Cargando..." onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="loading-spinner" style="display:none;"></div>
+            <div class="loading-text">Cargando panel de administración...</div>
+            <div class="loading-subtext">Inicializando sistema</div>
+        </div>
+    </div>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar vh-100 p-3 d-flex flex-column">
+            <div class="mb-4">
+                <h4 class="text-white mb-0" style="font-family: var(--font-headings);">
+                    <i class="bi bi-pizza"></i> <span class="sidebar-text">Pizza Steve</span>
+                </h4>
+                <small class="text-white-50">Panel Administrador</small>
+            </div>
+            <nav class="flex-grow-1">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">
+                            <i class="bi bi-speedometer2"></i>
+                            <span class="sidebar-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">
+                            <i class="bi bi-box-seam"></i>
+                            <span class="sidebar-text">Productos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stock">
+                            <i class="bi bi-archive"></i>
+                            <span class="sidebar-text">Stock</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#orders">
+                            <i class="bi bi-cart-check"></i>
+                            <span class="sidebar-text">Pedidos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#users">
+                            <i class="bi bi-people"></i>
+                            <span class="sidebar-text">Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#branches">
+                            <i class="bi bi-shop"></i>
+                            <span class="sidebar-text">Sucursales</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#delivery">
+                            <i class="bi bi-truck"></i>
+                            <span class="sidebar-text">Repartidores</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#promotions">
+                            <i class="bi bi-tag"></i>
+                            <span class="sidebar-text">Promociones</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#backups">
+                            <i class="bi bi-database"></i>
+                            <span class="sidebar-text">Backups</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reports">
+                            <i class="bi bi-graph-up"></i>
+                            <span class="sidebar-text">Reportes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#logs">
+                            <i class="bi bi-journal-text"></i>
+                            <span class="sidebar-text">Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <header class="d-flex justify-content-between align-items-center mb-4">
+                 <button id="sidebar-toggle" class="btn btn-primary"><i class="bi bi-list"></i></button>
+                 <h1 id="section-title" class="h2 mb-0" style="font-family: var(--font-headings);">Dashboard</h1>
+                <div>
+                    <button class="btn btn-outline-danger" onclick="logout()" title="Cerrar Sesión">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h6 class="stat-label">Ventas del Día</h6>
+                                <h3 id="stat-sales-today" class="mb-0">Bs. 0.00</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h6 class="stat-label">Pedidos Pendientes</h6>
+                                <h3 id="stat-pending-orders" class="mb-0">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h6 class="stat-label">Ingresos Totales</h6>
+                                <h3 id="stat-total-revenue" class="mb-0">Bs. 0.00</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h6 class="stat-label">Usuarios Activos</h6>
+                                <h3 id="stat-active-users" class="mb-0">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Ventas de la Última Semana</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="salesChart" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Productos Más Vendidos</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="topProductsChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#view-products">Ver Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#add-product">Agregar Producto</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="view-products">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+                                            <th>Categoría</th>
+                                            <th>Precio</th>
+                                            <th>Stock</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productsTableBody">
+                                        <tr><td colspan="7" class="text-center">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="add-product">
+                            <form id="addProductForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="productName" required minlength="2" 
+                                           title="El nombre solo puede contener letras, espacios y acentos. No se permiten números ni caracteres especiales.">
+                                    <div class="invalid-feedback">El nombre solo puede contener letras, espacios y acentos. No se permiten números.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <textarea class="form-control" id="productDescription" rows="3" 
+                                              maxlength="500"
+                                              title="La descripción puede contener letras, números y caracteres comunes. Máximo 500 caracteres."></textarea>
+                                    <small class="form-text text-muted">Máximo 500 caracteres. Se recomienda usar solo texto descriptivo.</small>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Categoría</label>
+                                        <select class="form-select" id="productCategory" required>
+                                            <option value="Pizza">Pizza</option>
+                                            <option value="Bebida">Bebida</option>
+                                            <option value="Postre">Postre</option>
+                                            <option value="Combo">Combo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Precio</label>
+                                        <input type="number" step="0.01" min="0.01" class="form-control" id="productPrice" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Stock Inicial</label>
+                                        <input type="number" min="0" class="form-control" id="productStock" value="0">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Sucursal</label>
+                                    <select class="form-select" id="productBranch">
+                                        <option value="">Todas las sucursales</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stock Section -->
+            <section id="stock" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Gestión de Stock</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="stockSearch" placeholder="Buscar producto...">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Stock Actual</th>
+                                        <th>Cantidad a Agregar</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stockTableBody">
+                                    <tr><td colspan="4" class="text-center">Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Gestión de Pedidos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <select class="form-select d-inline-block w-auto" id="orderStatusFilter">
+                                <option value="">Todos los estados</option>
+                                <option value="pending">Pendiente</option>
+                                <option value="preparing">En Preparación</option>
+                                <option value="ready_for_delivery">Listo para Entrega</option>
+                                <option value="out_for_delivery">En Camino</option>
+                                <option value="completed">Completado</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Pago</th>
+                                        <th>Repartidor</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody">
+                                    <tr><td colspan="8" class="text-center">Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#view-users">Ver Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#add-user">Agregar Usuario</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="view-users">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
+                                <div>
+                                    <h5 class="mb-1">Administrar usuarios</h5>
+                                    <span class="text-muted" id="usersStatusSummary">Mostrando usuarios activos</span>
+                                </div>
+                                <div class="btn-group" role="group" id="userStatusFilters" aria-label="Filtro de usuarios">
+                                    <button type="button" class="btn btn-sm btn-outline-light active" data-filter="active">Activos</button>
+                                    <button type="button" class="btn btn-sm btn-outline-light" data-filter="inactive">Inactivos</button>
+                                    <button type="button" class="btn btn-sm btn-outline-light" data-filter="all">Todos</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Teléfono</th>
+                                            <th>Rol</th>
+                                            <th>Sucursal</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <tr><td colspan="8" class="text-center">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="add-user">
+                            <form id="addUserForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nombre(s)</label>
+                                        <input type="text" class="form-control" id="userFirstName" required minlength="2">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Apellido(s)</label>
+                                        <input type="text" class="form-control" id="userLastName" minlength="2">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="userEmail" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">C.I.</label>
+                                        <input type="text" class="form-control" id="userCI" pattern="[0-9]+" minlength="5" maxlength="15" placeholder="Ej: 12345678">
+                                        <div class="invalid-feedback">El C.I. debe contener solo números (5-15 dígitos).</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                            <input type="tel" class="form-control" id="userPhone" pattern="[0-9 ()+-]+" minlength="7" maxlength="15">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Rol</label>
+                                        <select class="form-select" id="userRole" required>
+                                            <option value="">Seleccionar rol...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Dirección</label>
+                                        <input type="text" class="form-control" id="userAddress">
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 d-none" id="userBranchWrapper">
+                                        <label class="form-label">Sucursal (solo vendedores)</label>
+                                        <select class="form-select" id="userBranch">
+                                            <option value="">Selecciona una sucursal...</option>
+                                        </select>
+                                        <small class="text-muted">Obligatorio para vendedores.</small>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Fecha de Cumpleaños</label>
+                                        <input type="date" class="form-control" id="userBirthday">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="userPassword" required minlength="6">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Branches Section -->
+            <section id="branches" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#view-branches">Ver Sucursales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#add-branch">Agregar Sucursal</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="view-branches">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Dirección</th>
+                                            <th>Teléfono</th>
+                                            <th>Horario</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="branchesTableBody">
+                                        <tr><td colspan="7" class="text-center">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="add-branch">
+                            <form id="addBranchForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="branchName" required minlength="2">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="branchAddress" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="branchPhone" pattern="[0-9 ()+-]+" minlength="7" maxlength="15">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Horario Apertura</label>
+                                        <input type="time" class="form-control" id="branchOpen">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Horario Cierre</label>
+                                        <input type="time" class="form-control" id="branchClose">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="branchActive" checked>
+                                        <label class="form-check-label" for="branchActive">Activa</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Sucursal</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Delivery Section -->
+            <section id="delivery" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#view-delivery">Ver Repartidores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#add-delivery">Agregar Repartidor</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="view-delivery">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Teléfono</th>
+                                            <th>Email</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="deliveryTableBody">
+                                        <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="add-delivery">
+                            <form id="addDeliveryForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="deliveryName" required minlength="2">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="deliveryPhone" pattern="[0-9 ()+-]+" minlength="7" maxlength="15">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="deliveryEmail">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Estado</label>
+                                    <select class="form-select" id="deliveryStatus">
+                                        <option value="disponible">Disponible</option>
+                                        <option value="ocupado">Ocupado</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Repartidor</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Promotions Section -->
+            <section id="promotions" class="d-none">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#view-promotions">Ver Promociones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#add-promotion">Agregar Promoción</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="view-promotions">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Descripción</th>
+                                            <th>Descuento</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
+                                            <th>Sucursal</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="promotionsTableBody">
+                                        <tr><td colspan="8" class="text-center">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="add-promotion">
+                            <form id="addPromotionForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="promotionDescription" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Porcentaje de Descuento</label>
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control" id="promotionDiscount" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Fecha Inicio</label>
+                                        <input type="date" class="form-control" id="promotionStart" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Fecha Fin</label>
+                                        <input type="date" class="form-control" id="promotionEnd" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Sucursal</label>
+                                    <select class="form-select" id="promotionBranch">
+                                        <option value="">Todas las sucursales</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="promotionActive" checked>
+                                        <label class="form-check-label" for="promotionActive">Activa</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Promoción</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Backups Section -->
+            <section id="backups" class="d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Gestión de Backups</h5>
+                        <button class="btn btn-primary" id="btnCreateBackup">
+                            <i class="bi bi-database-add"></i> Crear Backup
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            Los backups se crean automáticamente según la configuración del cron. 
+                            Se mantienen los últimos 30 backups automáticamente.
+                        </div>
+                        <div id="backupsLoading" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                        <div id="backupsList" style="display: none;">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Archivo</th>
+                                            <th>Tamaño</th>
+                                            <th>Fecha</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="backupsTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="backupsEmpty" class="text-center py-4" style="display: none;">
+                                <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                                <p class="text-muted mt-3">No hay backups disponibles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section id="logs" class="d-none">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-journal-text"></i> Logs del Sistema
+                </h5>
+                <div>
+                    <select class="form-select form-select-sm d-inline-block" id="logLevelFilter" style="width: auto;">
+                        <option value="">Todos los niveles</option>
+                        <option value="info">Info</option>
+                        <option value="warning">Warning</option>
+                        <option value="error">Error</option>
+                        <option value="success">Success</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary ms-2" id="btnRefreshLogs">
+                        <i class="bi bi-arrow-clockwise"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="logsLoading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando logs...</span>
+                    </div>
+                </div>
+                <div id="logsContent" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha/Hora</th>
+                                    <th>Nivel</th>
+                                    <th>Usuario</th>
+                                    <th>Acción</th>
+                                    <th>Detalles</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="logsEmpty" class="text-center py-4" style="display: none;">
+                        <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                        <p class="text-muted mt-3">No hay logs disponibles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </section>
+
+            <!-- Reportes Section -->
+            <section id="reports" class="d-none">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-graph-up"></i> Reportes y Análisis
+                </h5>
+                <div>
+                    <select class="form-select form-select-sm d-inline-block" id="reportPeriod" style="width: auto;">
+                        <option value="today">Hoy</option>
+                        <option value="week">Esta Semana</option>
+                        <option value="month" selected>Este Mes</option>
+                        <option value="year">Este Año</option>
+                        <option value="all">Todo el Tiempo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="reportsLoading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando reportes...</span>
+                    </div>
+                </div>
+                <div id="reportsContent" style="display: none;">
+                    <!-- Resumen General -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card text-center border-primary">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Total Ventas</h6>
+                                    <h3 class="mb-0 text-primary" id="totalSales">Bs. 0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card text-center border-success">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Total Pedidos</h6>
+                                    <h3 class="mb-0 text-success" id="totalOrders">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card text-center border-info">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Ticket Promedio</h6>
+                                    <h3 class="mb-0 text-info" id="averageTicket">Bs. 0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card text-center border-warning">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Productos Vendidos</h6>
+                                    <h3 class="mb-0 text-warning" id="totalProducts">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos -->
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-pizza"></i> Pizzas Más Vendidas</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="topProductsChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-clock"></i> Pedidos por Hora del Día</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="ordersByHourChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-calendar"></i> Ventas por Día</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="salesByDayChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-shop"></i> Ventas por Sucursal</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="salesByBranchChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-credit-card"></i> Métodos de Pago</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="paymentMethodsChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="bi bi-tag"></i> Categorías Más Vendidas</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="categoriesChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Top Productos -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="bi bi-list-ol"></i> Top 10 Productos Más Vendidos</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad Vendida</th>
+                                            <th>Total Vendido</th>
+                                            <th>% del Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topProductsTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para código de seguridad al eliminar backup -->
+    <div class="modal fade" id="deleteBackupModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-shield-exclamation"></i> Código de Seguridad Requerido
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <strong>Advertencia:</strong> Esta acción eliminará permanentemente el backup. 
+                        Se requiere un código de seguridad para continuar.
+                    </div>
+                    <div class="mb-3">
+                        <label for="backupDeleteCode" class="form-label">Código de Seguridad:</label>
+                        <input type="password" class="form-control" id="backupDeleteCode" 
+                               placeholder="Ingrese el código de seguridad" autocomplete="off">
+                        <div class="form-text">Ingrese el código de seguridad para confirmar la eliminación.</div>
+                    </div>
+                    <input type="hidden" id="backupToDelete" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBackup">
+                        <i class="bi bi-trash"></i> Eliminar Backup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalles del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="orderDetailsContent" style="max-height: 80vh; overflow-y: auto;">
+                    <!-- Content loaded dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm">
+                        <input type="hidden" id="editProductId">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editProductName" required minlength="2" 
+                                   title="El nombre solo puede contener letras, espacios y acentos. No se permiten números ni caracteres especiales.">
+                            <div class="invalid-feedback">El nombre solo puede contener letras, espacios y acentos. No se permiten números.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" id="editProductDescription" rows="3" maxlength="500"
+                                      title="La descripción puede contener letras, números y caracteres comunes. Máximo 500 caracteres."></textarea>
+                            <small class="form-text text-muted">Máximo 500 caracteres. Se recomienda usar solo texto descriptivo.</small>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" id="editProductCategory" required>
+                                    <option value="Pizza">Pizza</option>
+                                    <option value="Bebida">Bebida</option>
+                                    <option value="Postre">Postre</option>
+                                    <option value="Combo">Combo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Precio</label>
+                                <input type="number" step="0.01" min="0.01" class="form-control" id="editProductPrice" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Stock</label>
+                                <input type="number" min="0" class="form-control" id="editProductStock" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sucursal</label>
+                            <select class="form-select" id="editProductBranch">
+                                <option value="">Todas las sucursales</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <input type="hidden" id="editUserId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre(s)</label>
+                                <input type="text" class="form-control" id="editUserFirstName" required minlength="2">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Apellido(s)</label>
+                                <input type="text" class="form-control" id="editUserLastName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editUserEmail" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">C.I.</label>
+                                <input type="text" class="form-control" id="editUserCI" pattern="[0-9]+" minlength="5" maxlength="15" placeholder="Ej: 12345678">
+                                <div class="invalid-feedback">El C.I. debe contener solo números (5-15 dígitos).</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="editUserPhone" pattern="[0-9 ()+-]+" minlength="7" maxlength="15">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Rol</label>
+                                <select class="form-select" id="editUserRole" required>
+                                    <option value="">Seleccionar rol...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="editUserAddress">
+                            </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3 d-none" id="editUserBranchWrapper">
+                                <label class="form-label">Sucursal (solo vendedores)</label>
+                                <select class="form-select" id="editUserBranch">
+                                    <option value="">Selecciona una sucursal...</option>
+                                </select>
+                                <small class="text-muted">Obligatorio para vendedores.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Cumpleaños</label>
+                                <input type="date" class="form-control" id="editUserBirthday">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nueva Contraseña (dejar vacío para no cambiar)</label>
+                                        <input type="password" class="form-control" id="editUserPassword" minlength="6">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editBranchContainer"></div>
+    <div id="editDeliveryContainer"></div>
+    <div id="editPromotionContainer"></div>
+
+    <!-- Modal confirmación logout -->
+    <div class="modal fade" id="adminLogoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-box-arrow-right text-danger me-2"></i> Cerrar sesión
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Esta acción cerrará tu sesión en el panel administrativo. ¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="adminConfirmLogout">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/security.js"></script>
+    <script src="../../assets/js/notifications.js"></script>
+    <!-- Gestor centralizado de tema (debe cargarse antes de main.js) -->
+    <script src="../../assets/js/theme-manager.js"></script>
+    <script src="js/form-validation.js"></script>
+    <script src="../../assets/js/loading.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Ocultar loading cuando la página esté lista
+        window.addEventListener('load', () => {
+            const pageLoading = document.getElementById('pageLoading');
+            if (pageLoading) {
+                setTimeout(() => {
+                    pageLoading.classList.add('hidden');
+                    setTimeout(() => pageLoading.remove(), 300);
+                }, 2000); // Aumentado a 2 segundos para que el GIF se vea más tiempo
+            }
+        });
+    </script>
+</body>
+</html>

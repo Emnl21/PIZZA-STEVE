@@ -1,0 +1,168 @@
+/* ============================================
+   🎨 PALETA DE COLORES UNIFICADA - Pizza Steve
+   ============================================ */
+
+:root {
+    /* Colores Principales de la Marca */
+    --brand-red: #D92B2B;           /* Rojo principal de Pizza Steve */
+    --brand-yellow: #F2A900;        /* Amarillo/Dorado secundario */
+    --brand-dark: #2D2A26;         /* Fondo oscuro */
+    
+    /* Colores Primarios */
+    --primary: var(--brand-red);
+    --primary-dark: #b82222;
+    --primary-light: #e84a4a;
+    --primary-hover: #c72525;
+    
+    /* Colores Secundarios */
+    --secondary: var(--brand-yellow);
+    --secondary-dark: #d18a00;
+    --secondary-light: #ffb833;
+    --secondary-hover: #e69a00;
+    
+    /* Fondos */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f7f6;
+    --bg-dark: var(--brand-dark);
+    --bg-dark-light: #3a3630;
+    --bg-card: #ffffff;
+    --bg-sidebar: var(--brand-dark);
+    
+    /* Textos */
+    --text-primary: #2D2A26;
+    --text-secondary: #6c757d;
+    --text-light: #ffffff;
+    --text-muted: #adb5bd;
+    
+    /* Estados */
+    --success: #28a745;
+    --success-light: #d4edda;
+    --warning: #ffc107;
+    --warning-light: #fff3cd;
+    --danger: #dc3545;
+    --danger-light: #f8d7da;
+    --info: #17a2b8;
+    --info-light: #d1ecf1;
+    
+    /* Bordes y Dividers */
+    --border-color: #dee2e6;
+    --border-light: #e9ecef;
+    --divider: rgba(0, 0, 0, 0.1);
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --shadow-primary: 0 4px 15px rgba(217, 43, 43, 0.3);
+    --shadow-secondary: 0 4px 15px rgba(242, 169, 0, 0.3);
+    
+    /* Bordes Redondeados */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-round: 50px;
+    
+    /* Tipografía */
+    --font-headings: 'Montserrat', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    
+    /* Transiciones */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   🎨 Clases de Utilidad de Colores
+   ============================================ */
+
+/* Backgrounds */
+.bg-brand-red { background-color: var(--brand-red) !important; }
+.bg-brand-yellow { background-color: var(--brand-yellow) !important; }
+.bg-brand-dark { background-color: var(--brand-dark) !important; }
+
+/* Text Colors */
+.text-brand-red { color: var(--brand-red) !important; }
+.text-brand-yellow { color: var(--brand-yellow) !important; }
+
+/* Borders */
+.border-brand-red { border-color: var(--brand-red) !important; }
+.border-brand-yellow { border-color: var(--brand-yellow) !important; }
+
+/* Buttons */
+.btn-brand-red {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    color: white;
+}
+
+.btn-brand-red:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: white;
+}
+
+.btn-brand-yellow {
+    background-color: var(--brand-yellow);
+    border-color: var(--brand-yellow);
+    color: var(--text-primary);
+}
+
+.btn-brand-yellow:hover {
+    background-color: var(--secondary-hover);
+    border-color: var(--secondary-hover);
+    color: var(--text-primary);
+}
+
+.btn-outline-brand-red {
+    color: var(--brand-red);
+    border-color: var(--brand-red);
+    background-color: transparent;
+}
+
+.btn-outline-brand-red:hover {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    color: white;
+}
+
+/* Badges */
+.badge-brand-red {
+    background-color: var(--brand-red);
+    color: white;
+}
+
+.badge-brand-yellow {
+    background-color: var(--brand-yellow);
+    color: var(--text-primary);
+}
+
+/* Cards con tema de marca */
+.card-brand {
+    border-left: 4px solid var(--brand-red);
+    box-shadow: var(--shadow-md);
+}
+
+.card-brand-secondary {
+    border-left: 4px solid var(--brand-yellow);
+    box-shadow: var(--shadow-md);
+}
+
+/* Gradientes de marca */
+.gradient-brand {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.gradient-brand-secondary {
+    background: linear-gradient(135deg, var(--brand-yellow) 0%, var(--secondary-dark) 100%);
+    color: var(--text-primary);
+}
+
+.gradient-brand-combined {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-yellow) 100%);
+    color: white;
+}
+

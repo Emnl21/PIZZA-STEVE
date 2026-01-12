@@ -1,0 +1,180 @@
+/* Estilos para Panel de Vendedor - Paleta Unificada */
+
+@import url('../../../assets/css/palette.css');
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+h1 {
+    font-family: var(--font-headings);
+    color: var(--brand-red);
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    color: white;
+    margin: 0;
+    box-shadow: var(--shadow-primary);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.5rem;
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+    font-family: var(--font-headings);
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Buttons */
+.btn {
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: var(--shadow-primary);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+.btn-warning {
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: #000;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    border-color: var(--danger);
+}
+
+/* Tables */
+.table {
+    background-color: white;
+}
+
+.table thead {
+    background-color: var(--bg-secondary);
+}
+
+.table thead th {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--brand-red);
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+}
+
+.badge.bg-success {
+    background-color: var(--success) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning) !important;
+    color: #000 !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--info) !important;
+}
+
+.badge.bg-primary {
+    background-color: var(--brand-red) !important;
+}
+
+/* Forms */
+.form-control {
+    border-radius: var(--radius-md);
+    border-color: var(--border-color);
+    transition: all var(--transition-base);
+}
+
+.form-control:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 0.2rem rgba(217, 43, 43, 0.25);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Alerts */
+.alert {
+    border-radius: var(--radius-md);
+    border: none;
+}
+
+.alert-success {
+    background-color: var(--success-light);
+    color: #155724;
+}
+
+.alert-warning {
+    background-color: var(--warning-light);
+    color: #856404;
+}
+
+.alert-danger {
+    background-color: var(--danger-light);
+    color: #721c24;
+}
+
+.alert-info {
+    background-color: var(--info-light);
+    color: #0c5460;
+}

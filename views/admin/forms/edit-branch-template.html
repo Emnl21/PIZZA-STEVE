@@ -1,0 +1,43 @@
+<div id="editBranchCard" class="card shadow-sm mb-4 edit-panel d-none">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Editar Sucursal</h5>
+    <button type="button" class="btn btn-sm btn-outline-secondary" id="cancelEditBranch">Cancelar</button>
+  </div>
+  <div class="card-body">
+    <form id="editBranchForm">
+      <input type="hidden" id="editBranchId">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="editBranchName" required minlength="2">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="editBranchAddress" required>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-control" id="editBranchPhone">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Horario Apertura</label>
+          <input type="time" class="form-control" id="editBranchOpen">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Horario Cierre</label>
+          <input type="time" class="form-control" id="editBranchClose">
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="editBranchActive">
+          <label class="form-check-label" for="editBranchActive">Activa</label>
+        </div>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <button type="button" class="btn btn-outline-secondary" id="cancelEditBranchSecondary">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

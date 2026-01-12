@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+@import url('../../../assets/css/palette.css');
+
+:root {
+    --primary-color: var(--brand-red);
+    --secondary-color: var(--brand-yellow);
+    --dark-bg: var(--brand-dark);
+    --sidebar-width: 250px;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    background-color: var(--dark-bg);
+    color: white;
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar.collapsed {
+    width: 60px;
+    min-width: 60px;
+}
+
+.sidebar.collapsed .sidebar-text {
+    display: none;
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.8);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.sidebar .nav-link i {
+    font-size: 1.2rem;
+    min-width: 20px;
+}
+
+/* --- Main Content --- */
+.content {
+    flex-grow: 1;
+    padding: 1.5rem;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+}
+
+/* --- Components --- */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    color: white !important;
+    border: none;
+    transition: transform var(--transition-base);
+    box-shadow: var(--shadow-primary);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(217, 43, 43, 0.4);
+}
+
+.stat-card .card-body {
+    color: white !important;
+}
+
+.stat-card h6,
+.stat-card .stat-label {
+    color: #ffffff !important;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card h3,
+.stat-card h3.mb-0 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card * {
+    color: white !important;
+}
+
+.table {
+    background-color: white;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+}
+
+/* --- Animations --- */
+.fade-in {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    from { 
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        z-index: 1000;
+        height: 100vh;
+    }
+    
+    .sidebar.show {
+        left: 0;
+    }
+    
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* --- Modal --- */
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+    padding: 1.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+}
+
+/* Paneles de edición inline fijos y visibles */
+.edit-panel {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 420px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: auto;
+    z-index: 2000;
+}
+/* Asegurar que el modal de promociones sea visible cuando tiene la clase show */
+#editPromotionModal.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 1055 !important;
+}
+
+#editPromotionModal.show .modal-dialog {
+    z-index: 1056 !important;
+}
+
+/* --- Button Styles --- */
+.btn-primary {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    transition: all var(--transition-base);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: var(--shadow-primary);
+    transform: translateY(-2px);
+}
+
+.btn-outline-danger {
+    color: var(--brand-red);
+    border-color: var(--brand-red);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    color: white;
+    box-shadow: var(--shadow-primary);
+}
+
+/* --- Status Badges --- */
+.badge.bg-success { background-color: var(--success) !important; }
+.badge.bg-warning { background-color: var(--warning) !important; color: #000 !important; }
+.badge.bg-danger { background-color: var(--danger) !important; }
+.badge.bg-info { background-color: var(--info) !important; }
+.badge.bg-primary { background-color: var(--brand-red) !important; }
+.badge.bg-secondary { background-color: var(--brand-yellow) !important; color: var(--text-primary) !important; }

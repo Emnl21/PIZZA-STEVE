@@ -1,0 +1,43 @@
+# Archivos de entorno
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+rate_limit/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules (si se usa)
+node_modules/
+
+# Archivos de backup
+*.bak
+*.backup
+*.sql.bak
+backups/
+!backups/.gitkeep
+*.sql
+*.dump
+
+# Archivos de configuración local
+config/local.php
+
+# Archivos subidos por usuarios
+uploads/
+!uploads/.gitkeep
+

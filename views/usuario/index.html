@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - PizzaSteve</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/palette.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../assets/css/loading.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="pageLoading" class="loading-overlay">
+        <div class="loading-container">
+            <!-- GIF de Pizza Steve -->
+            <img src="../../assets/images/crazy-person-pizza-steve.gif" class="loading-gif" alt="Cargando..." onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="loading-spinner" style="display:none;"></div>
+            <div class="loading-text">Cargando tu cuenta...</div>
+            <div class="loading-subtext">Obteniendo información</div>
+        </div>
+    </div>
+    
+    <!-- Contenedor de Notificaciones -->
+    <div id="notificationContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 400px;"></div>
+    
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%); box-shadow: var(--shadow-primary);">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../../index.html">
+                <img src="../../assets/images/Logo.png" alt="Pizza Steve Logo" class="me-2" style="max-height: 40px;">
+                <span style="font-family: var(--font-headings); font-weight: 700;">Pizza Steve</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#menu">Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#promotions">Promociones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#about">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="bi bi-cart"></i>
+                            <span class="badge bg-danger" id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="" alt="Avatar" class="rounded-circle mb-2" id="userAvatar" style="width: 100px; height: 100px; object-fit: cover; background: #f0f0f0;">
+                            <h5 id="userName">Cargando...</h5>
+                            <p class="text-muted" id="userEmail">Cargando...</p>
+                        </div>
+                        <div class="list-group">
+                            <button class="list-group-item list-group-item-action active" data-section="profile">
+                                <i class="bi bi-person"></i> Mi Perfil
+                            </button>
+                            <button class="list-group-item list-group-item-action" data-section="orders">
+                                <i class="bi bi-list-ul"></i> Mis Pedidos
+                            </button>
+                            <button class="list-group-item list-group-item-action" data-section="addresses">
+                                <i class="bi bi-geo-alt"></i> Direcciones
+                            </button>
+                            <button class="list-group-item list-group-item-action" data-section="payment">
+                                <i class="bi bi-credit-card"></i> Métodos de Pago
+                            </button>
+                            <button class="list-group-item list-group-item-action" data-section="favorites">
+                                <i class="bi bi-heart"></i> Favoritos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div class="col-md-9">
+                <!-- Sección Perfil -->
+                <div id="profileSection" class="content-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="bi bi-person"></i> Mi Perfil</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="profileForm">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="profileName" class="form-label">Nombre *</label>
+                                        <input type="text" class="form-control" id="profileName" required minlength="2" autocomplete="given-name">
+                                        <div class="invalid-feedback">El nombre solo puede contener letras, espacios y acentos. Mínimo 2 caracteres.</div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="profileApellidos" class="form-label">Apellidos *</label>
+                                        <input type="text" class="form-control" id="profileApellidos" required minlength="2" autocomplete="family-name">
+                                        <div class="invalid-feedback">Los apellidos solo pueden contener letras, espacios y acentos. Mínimo 2 caracteres.</div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="profileCI" class="form-label">C.I. *</label>
+                                        <input type="text" class="form-control" id="profileCI" required pattern="[0-9]+" minlength="5" maxlength="15" placeholder="Ej: 12345678">
+                                        <div class="invalid-feedback">El C.I. debe contener solo números (5-15 dígitos).</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="profileEmail" class="form-label">Correo Electrónico *</label>
+                                        <input type="email" class="form-control" id="profileEmail" required autocomplete="email">
+                                        <div class="invalid-feedback">Por favor ingrese un email válido.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="profilePhone" class="form-label">Teléfono *</label>
+                                        <input type="tel" class="form-control" id="profilePhone" required pattern="[0-9 ()+-]+" minlength="7" maxlength="15" autocomplete="tel">
+                                        <div class="invalid-feedback">El teléfono debe tener entre 7 y 15 dígitos.</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="profileBirthdate" class="form-label">Fecha de Nacimiento</label>
+                                        <input type="date" class="form-control" id="profileBirthdate">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="profileAddress" class="form-label">Dirección Principal</label>
+                                    <textarea class="form-control" id="profileAddress" rows="2" minlength="5"></textarea>
+                                    <div class="invalid-feedback">La dirección debe tener al menos 5 caracteres.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Guardar Cambios
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Pedidos -->
+                <div id="ordersSection" class="content-section" style="display: none;">
+                    <!-- Información de Contacto del Establecimiento -->
+                    <div class="card mb-4" style="border-left: 4px solid var(--brand-red); box-shadow: var(--shadow-md);">
+                        <div class="card-body">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-md-3 text-center mb-3 mb-md-0">
+                                    <img src="../../assets/images/Logo.png" alt="Pizza Steve Logo" class="img-fluid" style="max-height: 120px;">
+                                </div>
+                                <div class="col-md-9">
+                                    <h5 class="mb-3" style="color: var(--brand-red); font-family: var(--font-headings);">
+                                        <i class="bi bi-shop"></i> Nuestras Sucursales en La Paz
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-start">
+                                                <i class="bi bi-globe text-brand-red me-2" style="font-size: 1.2rem;"></i>
+                                                <div>
+                                                    <strong>Sitio Web:</strong><br>
+                                                    <a href="https://www.pizzasteve.pizza" target="_blank" class="text-decoration-none">www.pizzasteve.pizza</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-start">
+                                                <i class="bi bi-share-fill text-brand-red me-2" style="font-size: 1.2rem;"></i>
+                                                <div>
+                                                    <strong>Redes Sociales:</strong><br>
+                                                    <span>@pizzastevebolivia</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a href="https://www.facebook.com/pizzastevebolivia" target="_blank" class="btn btn-sm" style="background-color: #1877f2; color: white;">
+                                                <i class="bi bi-facebook"></i> Facebook
+                                            </a>
+                                            <a href="https://www.instagram.com/pizzastevebolivia" target="_blank" class="btn btn-sm" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: white;">
+                                                <i class="bi bi-instagram"></i> Instagram
+                                            </a>
+                                            <a href="https://www.pizzasteve.pizza" target="_blank" class="btn btn-sm btn-outline-primary" style="border-color: var(--brand-red); color: var(--brand-red);">
+                                                <i class="bi bi-globe"></i> Sitio Web
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Sucursales -->
+                            <div class="row g-3">
+                                <!-- Sopocachi -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-red);">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-brand-red" style="font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Sopocachi
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Calle Rosendo Gutiérrez, entre Av. 20 de Octubre y 6 de Agosto (Garage negro)
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59178825417" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>78825417</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Martes y Miércoles:</strong> 17:00 – 22:30<br>
+                                                <i class="bi bi-clock text-muted"></i> <strong>Lun, Jue, Vie, Sáb, Dom:</strong> 13:00 – 22:30
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Los Pinos -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-red);">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-brand-red" style="font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Los Pinos
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Calle 28 (Enrique Oblitas y José Aguirre #1020)
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59175250788" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>75250788</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Martes y Miércoles:</strong> 17:00 – 22:30<br>
+                                                <i class="bi bi-clock text-muted"></i> <strong>Lun, Jue, Sáb, Dom:</strong> 13:00 – 22:30
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Miraflores -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-red);">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-brand-red" style="font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Miraflores
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Calle Hugo Estrada 1283, esquina Av. Estados Unidos
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59175881482" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>75881482</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Martes y Miércoles:</strong> 17:00 – 22:30<br>
+                                                <i class="bi bi-clock text-muted"></i> <strong>Lun, Jue, Sáb, Dom:</strong> 13:00 – 22:30
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Achumani -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-red);">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-brand-red" style="font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Achumani
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Calle 28, Fermín Eyzaguirre 495
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59175835659" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>75835659</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Lunes a Jueves:</strong> 17:00 – 22:30<br>
+                                                <i class="bi bi-clock text-muted"></i> <strong>Vie, Sáb, Dom:</strong> 13:00 – 22:30
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Irpavi -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-red);">
+                                        <div class="card-body">
+                                            <h6 class="card-title text-brand-red" style="font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Irpavi
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Calle 16 de Irpavi, Edificio Buganvilla Nº 5, frente a la Plaza Litoral
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59169787035" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>69787035</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Lunes a Viernes:</strong> 17:00 – 22:30<br>
+                                                <i class="bi bi-clock text-muted"></i> <strong>Sábado y Domingo:</strong> 13:00 – 22:30
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Megacenter -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100" style="border-left: 3px solid var(--brand-yellow);">
+                                        <div class="card-body">
+                                            <h6 class="card-title" style="color: var(--brand-yellow); font-family: var(--font-headings);">
+                                                <i class="bi bi-geo-alt-fill"></i> Megacenter
+                                            </h6>
+                                            <p class="card-text small mb-2">
+                                                <i class="bi bi-geo-alt text-muted"></i> Av. Rafael Pabón, Patio de comidas Megacenter, Irpavi
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <a href="https://wa.me/59162530449" target="_blank" class="text-decoration-none">
+                                                    <i class="bi bi-whatsapp text-success"></i> <strong>62530449</strong>
+                                                </a>
+                                            </p>
+                                            <p class="card-text small mb-0">
+                                                <i class="bi bi-clock text-muted"></i> <strong>Todos los días:</strong> 10:00 – 22:00
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Pedidos -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%); color: white;">
+                            <h4 class="mb-0" style="font-family: var(--font-headings);">
+                                <i class="bi bi-list-ul"></i> Mis Pedidos
+                            </h4>
+                            <button class="btn btn-light btn-sm" onclick="window.location.href='../../index.html#menu'; return false;">
+                                <i class="bi bi-plus"></i> Nuevo Pedido
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="ordersList">
+                                <div class="text-center">
+                                    <div class="spinner-border text-brand-red" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Direcciones -->
+                <div id="addressesSection" class="content-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4><i class="bi bi-geo-alt"></i> Mis Direcciones</h4>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                <i class="bi bi-plus"></i> Agregar Dirección
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="addressesList">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Métodos de Pago -->
+                <div id="paymentSection" class="content-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4><i class="bi bi-credit-card"></i> Métodos de Pago</h4>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                                <i class="bi bi-plus"></i> Agregar Método
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="paymentMethodsList">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Favoritos -->
+                <div id="favoritesSection" class="content-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="bi bi-heart"></i> Productos Favoritos</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="favoritesList">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Dirección -->
+    <div class="modal fade" id="addAddressModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Nueva Dirección</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAddressForm">
+                        <div class="mb-3">
+                            <label for="addressAlias" class="form-label">Alias (Ej: Casa, Trabajo)</label>
+                            <input type="text" class="form-control" id="addressAlias" required minlength="2" maxlength="50">
+                            <div class="invalid-feedback">El alias debe tener entre 2 y 50 caracteres.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressStreet" class="form-label">Calle y Número</label>
+                            <input type="text" class="form-control" id="addressStreet" required minlength="5">
+                            <div class="invalid-feedback">La calle y número deben tener al menos 5 caracteres.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressColonia" class="form-label">Colonia</label>
+                            <input type="text" class="form-control" id="addressColonia" required minlength="2">
+                            <div class="invalid-feedback">La colonia debe tener al menos 2 caracteres.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressCP" class="form-label">Código Postal</label>
+                            <input type="text" class="form-control" id="addressCP" required pattern="[0-9]+" minlength="4" maxlength="10">
+                            <div class="invalid-feedback">El código postal debe contener solo números (4-10 dígitos).</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressReferencias" class="form-label">Referencias (Opcional)</label>
+                            <textarea class="form-control" id="addressReferencias" rows="2" maxlength="200"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="addAddress()">Guardar Dirección</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Método de Pago -->
+    <div class="modal fade" id="addPaymentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Método de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPaymentForm">
+                        <div class="mb-3">
+                            <label for="paymentType" class="form-label">Tipo de Pago</label>
+                            <select class="form-select" id="paymentType" required>
+                                <option value="">Selecciona...</option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="qr">Código QR</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="paymentAlias" class="form-label">Alias (Ej: QR Personal)</label>
+                            <input type="text" class="form-control" id="paymentAlias">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="addPaymentMethod()">Guardar Método</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Carrito de Compras -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems"></div>
+                    <div class="text-end mt-3">
+                        <h5>Total: <span id="cartTotal">Bs. 0.00</span></h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="checkout()">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5" style="background-color: var(--brand-dark) !important;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="../../assets/images/Logo.png" alt="Pizza Steve Logo" class="me-2" style="max-height: 50px;">
+                        <h5 class="mb-0" style="font-family: var(--font-headings);">Pizza Steve</h5>
+                    </div>
+                    <p class="text-muted">Las mejores pizzas de la ciudad, hechas con ingredientes frescos y de la mejor calidad.</p>
+                    <div class="mb-3">
+                        <a href="https://www.pizzasteve.pizza" target="_blank" class="text-white text-decoration-none">
+                            <i class="bi bi-globe me-2"></i> www.pizzasteve.pizza
+                        </a>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="https://www.facebook.com/pizzastevebolivia" target="_blank" class="text-white" style="font-size: 1.5rem;" title="Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/pizzastevebolivia" target="_blank" class="text-white" style="font-size: 1.5rem;" title="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h6 class="mb-3" style="color: var(--brand-yellow); font-family: var(--font-headings);">
+                        <i class="bi bi-shop"></i> Sucursales
+                    </h6>
+                    <div class="small">
+                        <p class="mb-1"><strong>Sopocachi:</strong> <a href="https://wa.me/59178825417" target="_blank" class="text-white text-decoration-none">78825417</a></p>
+                        <p class="mb-1"><strong>Los Pinos:</strong> <a href="https://wa.me/59175250788" target="_blank" class="text-white text-decoration-none">75250788</a></p>
+                        <p class="mb-1"><strong>Miraflores:</strong> <a href="https://wa.me/59175881482" target="_blank" class="text-white text-decoration-none">75881482</a></p>
+                        <p class="mb-1"><strong>Achumani:</strong> <a href="https://wa.me/59175835659" target="_blank" class="text-white text-decoration-none">75835659</a></p>
+                        <p class="mb-1"><strong>Irpavi:</strong> <a href="https://wa.me/59169787035" target="_blank" class="text-white text-decoration-none">69787035</a></p>
+                        <p class="mb-0"><strong>Megacenter:</strong> <a href="https://wa.me/59162530449" target="_blank" class="text-white text-decoration-none">62530449</a></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="mb-3" style="color: var(--brand-yellow); font-family: var(--font-headings);">
+                        <i class="bi bi-clock"></i> Horarios
+                    </h6>
+                    <p class="mb-2 small">
+                        <strong>Mayoría de Sucursales:</strong><br>
+                        <span class="text-muted">Martes y Miércoles: 17:00 – 22:30</span><br>
+                        <span class="text-muted">Otros días: 13:00 – 22:30</span>
+                    </p>
+                    <p class="mb-2 small">
+                        <strong>Megacenter:</strong><br>
+                        <span class="text-muted">Todos los días: 10:00 – 22:00</span>
+                    </p>
+                    <p class="mb-0 small">
+                        <strong>Redes Sociales:</strong><br>
+                        <span class="text-muted">@pizzastevebolivia</span>
+                    </p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0 text-muted">
+                        &copy; 2024 Pizza Steve. Todos los derechos reservados. | 
+                        <a href="https://www.pizzasteve.pizza" target="_blank" class="text-muted text-decoration-none">www.pizzasteve.pizza</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal confirmación logout -->
+    <div class="modal fade" id="userLogoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-box-arrow-right text-primary me-2"></i>
+                        Cerrar Sesión
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">¿Seguro que deseas salir? Podrás volver a iniciar sesión cuando quieras.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="userConfirmLogout">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/notifications.js"></script>
+    <!-- Gestor centralizado de tema (debe cargarse antes de main.js) -->
+    <script src="../../assets/js/theme-manager.js"></script>
+    <script src="../../assets/js/loading.js"></script>
+    <script src="js/main.js"></script>
+    <script src="../../assets/js/cart.js"></script>
+    <script>
+        // Ocultar loading cuando la página esté lista
+        window.addEventListener('load', () => {
+            const pageLoading = document.getElementById('pageLoading');
+            if (pageLoading) {
+                setTimeout(() => {
+                    pageLoading.classList.add('hidden');
+                    setTimeout(() => pageLoading.remove(), 300);
+                }, 2000); // Aumentado a 2 segundos para que el GIF se vea más tiempo
+            }
+        });
+    </script>
+</body>
+</html>
+</html>

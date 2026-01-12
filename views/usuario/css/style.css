@@ -1,0 +1,127 @@
+/* Estilos para Panel de Usuario - Paleta Unificada */
+
+@import url('../../../assets/css/palette.css');
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Navbar */
+.navbar-dark {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%) !important;
+    box-shadow: var(--shadow-primary);
+}
+
+.navbar-brand {
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    transition: all var(--transition-base);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: var(--shadow-primary);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+.btn-outline-primary {
+    color: var(--brand-red);
+    border-color: var(--brand-red);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    color: white;
+}
+
+/* List Group */
+.list-group-item {
+    border-color: var(--border-light);
+    transition: all var(--transition-base);
+}
+
+.list-group-item:hover {
+    background-color: var(--bg-secondary);
+    border-left: 3px solid var(--brand-red);
+}
+
+.list-group-item.active {
+    background: linear-gradient(135deg, var(--brand-red) 0%, var(--primary-dark) 100%);
+    border-color: var(--brand-red);
+    color: white;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 0.2rem rgba(217, 43, 43, 0.25);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.75em;
+    border-radius: var(--radius-sm);
+}
+
+.badge.bg-success {
+    background-color: var(--success) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning) !important;
+    color: #000 !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--info) !important;
+}
+
+/* Footer */
+footer.bg-dark {
+    background-color: var(--brand-dark) !important;
+}

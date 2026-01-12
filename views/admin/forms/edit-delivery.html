@@ -1,0 +1,94 @@
+<div id="editDeliveryCard" class="card shadow-sm mb-4 edit-panel d-none">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Editar Repartidor</h5>
+    <button type="button" class="btn btn-sm btn-outline-secondary" id="cancelEditDelivery">Cancelar</button>
+  </div>
+  <div class="card-body">
+    <form id="editDeliveryForm">
+      <input type="hidden" id="editDeliveryId">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="editDeliveryName" required minlength="2">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-control" id="editDeliveryPhone" pattern="[0-9 ()+-]+" minlength="7" maxlength="15">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="editDeliveryEmail">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <select class="form-select" id="editDeliveryStatus">
+          <option value="disponible">Disponible</option>
+          <option value="ocupado">Ocupado</option>
+        </select>
+      </div>
+      <div id="editDeliveryCard" class="card shadow-sm mb-4 edit-panel d-none">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Editar Repartidor</h5>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="cancelEditDelivery">Cancelar</button>
+        </div>
+        <div class="card-body">
+          <form id="editDeliveryForm">
+            <input type="hidden" id="editDeliveryId">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="editDeliveryName" required minlength="2">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="editDeliveryPhone" pattern="[0-9 ()+-]*" minlength="0" maxlength="20">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="editDeliveryEmail">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Estado</label>
+              <select class="form-select" id="editDeliveryStatus">
+                <option value="disponible">Disponible</option>
+                <option value="ocupado">Ocupado</option>
+              </select>
+            </div>
+            <div id="editDeliveryCard" class="card shadow-sm mb-4 edit-panel d-none">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Editar Repartidor</h5>
+                <button type="button" class="btn btn-sm btn-outline-secondary" id="cancelEditDelivery">Cancelar</button>
+              </div>
+              <div class="card-body">
+                <form id="editDeliveryForm">
+                  <input type="hidden" id="editDeliveryId">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="editDeliveryName" required minlength="2">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Teléfono</label>
+                      <input type="tel" class="form-control" id="editDeliveryPhone" pattern="[0-9 ()+-]*" minlength="0" maxlength="20">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="editDeliveryEmail">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" id="editDeliveryStatus">
+                      <option value="disponible">Disponible</option>
+                      <option value="ocupado">Ocupado</option>
+                    </select>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-outline-secondary" id="cancelEditDeliverySecondary">Cancelar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
