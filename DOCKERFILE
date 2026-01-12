@@ -17,9 +17,6 @@ COPY controllers/ /var/www/html/controllers/
 COPY models/ /var/www/html/models/
 COPY views/ /var/www/html/views/
 
-# Copia archivos PHP adicionales en la raíz si existen
-COPY *.php /var/www/html/ 2>/dev/null || true
-
 # Habilitar módulo rewrite de Apache
 RUN a2enmod rewrite
 
