@@ -69,3 +69,10 @@ $GLOBALS['username'] = $username;
 $GLOBALS['password'] = $password;
 $GLOBALS['dbname'] = $dbname;
 
+$host = getenv("MYSQLHOST");
+$user = getenv("MYSQLUSER");
+$pass = getenv("MYSQLPASSWORD");
+$db   = getenv("MYSQLDATABASE");
+$port = getenv("MYSQLPORT");
+
+$conn = new mysqli($host, $user, $pass, $db, $port);
